@@ -1,0 +1,24 @@
+{
+  "name": "webcam_canvas",
+  "version": "1.0.0",
+  "description": "an exploration of webcam and canvas",
+  "main": "index.js",
+  "scripts": {
+    "lite": "lite-server",
+    "start": "npm run lite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Plasnid/webcam_canvas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Plasnid/webcam_canvas/issues"
+  },
+  "homepage": "https://github.com/Plasnid/webcam_canvas#readme",
+  "devDependencies": {
+    "lite-server": "^2.5.4"
+  }
+}
