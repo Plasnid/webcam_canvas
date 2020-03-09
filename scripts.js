@@ -1,20 +1,42 @@
 class PhotoBooth{
     constructor(){
+        this.red = false;
+        this.split = false;
+        this.greenScreen = false;
         this.video = document.querySelector('.player');
         this.canvas = document.querySelector('.photo');
         this.ctx = this.canvas.getContext('2d');
         this.strip = document.querySelector('.strip');
         this.snap = document.querySelector('.snap');
         this.shutter = document.querySelector("#camButton");
+        //*control buttons here
+        this.redBtn = document.querySelector("#redEffect");
+        this.splitBtn = document.querySelector("#splitEffect");
+        this.greenScreenBtn = document.querySelector("#greenScreenEffect");
+        this.redBtn.addEventListener("click", ()=>{
+            this.greenScreen = false;
+            this.split = false;
+            this.red = !this.red;
+        });
+        this.splitBtn.addEventListener("click", ()=>{
+            this.greenScreen = false;
+            this.red = false;
+            this.split = !this.split;
+        });
+        this.greenScreenBtn.addEventListener("click", ()=>{
+            this.greenScreen = !this.greenScreen;
+            this.red = false;
+            this.split = false;
+        });
         camButton.addEventListener("click", ()=>this.takePhoto());
         this.getVideo();
         this.video.addEventListener("canplay", () => {
             this.paintToCanvas();
         });
+
     }
 
     getVideo() {
-        console.log("inside of getVideo");
         navigator.mediaDevices.getUserMedia({
                 video: true,
                 audio: false
@@ -41,13 +63,15 @@ class PhotoBooth{
             //crazy huge array that goes[r,g,b,a,r,g,b,a,r,g,b,a.....]
             //console.log(pixels);
             //debugger;
-            //mess with pixels
-            //pixels = rgbSplit(pixels);
-            //now for trippy trails
-            //ctx.globalAlpha = 0.1;
-            //trying green screen
-            this.greenScreen(pixels);
-            //put pixels back
+            if(this.red==true){
+                pixels = this.redEffect(pixels);
+            }
+            if(this.split==true){
+                pixels = this.rgbSplit(pixels);
+            }
+            if(this.greenScreen==true){
+                pixels = this.greenScreenEffect(pixels);
+            }
             this.ctx.putImageData(pixels, 0, 0);
         }, 16)
     }
@@ -70,7 +94,7 @@ class PhotoBooth{
         return pixels;
     }
     
-    greenScreen(pixels) {
+    greenScreenEffect(pixels) {
         const levels = {};
     
         document.querySelectorAll('.rgb input').forEach((input) => {
@@ -110,5 +134,4 @@ class PhotoBooth{
         this.strip.insertBefore(link, this.strip.firstChild);
     }
 }
-
 let myPhotoBooth = new PhotoBooth();

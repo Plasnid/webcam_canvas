@@ -6,37 +6,58 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="photobooth">
-        <div class="controls">
+    <header>
+        <h1>Photobooth</h1>
+    </header>
+    <main>
+        <article id="controls">
+            <form>
+                <h2>Colour Range Selector</h2>
+                <fieldset class="rgb">
+                    <label for="rmin">Red Min:</label>
+                    <input type="range" min=0 max=255 name="rmin">
+                    <label for="rmax">Red Max:</label>
+                    <input type="range" min=0 max=255 name="rmax">
+                </fieldset>
+                
+                <fieldset class="rgb">
+                    <label for="gmin">Green Min:</label>
+                    <input type="range" min=0 max=255 name="gmin">
+                    <label for="gmax">Green Max:</label>
+                    <input type="range" min=0 max=255 name="gmax">
+                </fieldset>
+                
+                <fieldset class="rgb">
+                    <label for="bmin">Blue Min:</label>
+                    <input type="range" min=0 max=255 name="bmin">
+                    <label for="bmax">Blue Max:</label>
+                    <input type="range" min=0 max=255 name="bmax">
+                </fieldset>
+                <fieldset>
+                    <h2>Effects Selection</h2>
+                    <div>
+                        <input type="button" id="redEffect" value="red filter">
+                        <input type="button" id="splitEffect" value="split filter">
+                        <input type="button" id="greenScreenEffect" value="green screen">
+                    </div>
+                </fieldset>
+            </form>
             <button id="camButton">Take Photo</button>
-            <div class="rgb">
-                <label for="rmin">Red Min:</label>
-                <input type="range" min=0 max=255 name="rmin">
-                <label for="rmax">Red Max:</label>
-                <input type="range" min=0 max=255 name="rmax">
+        </article>
+        <article id="feeds">
+            <div>
+                <h2>Original Feed</h2>
+                <video class="player"></video>
+            </div>
+            <div>
+                <h2>Effects Feed</h2>
+                <canvas class="photo"></canvas>
+            </div>
+        </article>
+        <div class="strip"></div>
+    </main>
 
-                <br>
-
-                <label for="gmin">Green Min:</label>
-                <input type="range" min=0 max=255 name="gmin">
-                <label for="gmax">Green Max:</label>
-                <input type="range" min=0 max=255 name="gmax">
-
-                <br>
-
-                <label for="bmin">Blue Min:</label>
-                <input type="range" min=0 max=255 name="bmin">
-                <label for="bmax">Blue Max:</label>
-                <input type="range" min=0 max=255 name="bmax">
-        </div>
-    </div>
-
-    <canvas class="photo"></canvas>
-    <video class="player"></video>
-    <div class="strip"></div>
-    </div>
-
-    <audio class="snap" src="https://wesbos.com/demos/photobooth/snap.mp3" hidden></audio>
+    <audio class="snap" src="snap.mp3" hidden></audio>
 
     <script src="scripts.js"></script>
 </body>

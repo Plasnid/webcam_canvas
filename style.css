@@ -1,48 +1,44 @@
 html {
     box-sizing: border-box;
 }
-
 *,
 *:before,
 *:after {
     box-sizing: inherit;
+    margin: 0;
+    padding: 0;
 }
 
 html {
     font-size: 10px;
     background: #ffc600;
 }
-
-.photobooth {
-    background: white;
-    max-width: 150rem;
-    margin: 2rem auto;
-    border-radius: 2px;
+header h1{
+    margin: 0 auto;
+    font-size: 5em;
+    text-align: center;
+}
+#controls{
+    display: flex;
+    padding-bottom: 20px;
 }
 
-/*clearfix*/
-.photobooth:after {
-    content: '';
-    display: block;
-    clear: both;
+/* *code for the photo image*/
+#feeds{
+    display: flex;
+    justify-content: space-around;
 }
-
 .photo {
-    width: 100%;
-    float: left;
+    border: 2px solid black;
 }
-
+/* *live video feed*/
 .player {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 200px;
+    border: 2px solid blue;
 }
 
 /*
     Strip!
   */
-
 .strip {
     padding: 2rem;
 }
