@@ -1,11 +1,26 @@
+/**
+ * * Photobooth class 
+ * 
+ * * This is a self contained class dealing with the photobooth application
+ */
 class PhotoBooth{
+    /**
+     * * constructor function
+     * 
+     * * sets up:
+     * * - screen references
+     * * - filter booleans(which filter is active)
+     */
     constructor(){
+        // * our 3 filters that can be applied to our image
         this.red = false;
         this.split = false;
         this.greenScreen = false;
+        // * video feed, canvas and the context for the canvas
         this.video = document.querySelector('.player');
         this.canvas = document.querySelector('.photo');
         this.ctx = this.canvas.getContext('2d');
+        // * image strip, shutter button and the snap sound effect
         this.strip = document.querySelector('.strip');
         this.snap = document.querySelector('.snap');
         this.shutter = document.querySelector("#camButton");
@@ -134,4 +149,5 @@ class PhotoBooth{
         this.strip.insertBefore(link, this.strip.firstChild);
     }
 }
+// * creating an instance of photobooth
 let myPhotoBooth = new PhotoBooth();
