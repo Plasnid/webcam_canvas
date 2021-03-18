@@ -28,6 +28,7 @@ class PhotoBooth{
         this.redBtn = document.querySelector("#redEffect");
         this.splitBtn = document.querySelector("#splitEffect");
         this.greenScreenBtn = document.querySelector("#greenScreenEffect");
+        // * on selecting a filter, we turn the other two filters off
         this.redBtn.addEventListener("click", ()=>{
             this.greenScreen = false;
             this.split = false;
@@ -43,14 +44,23 @@ class PhotoBooth{
             this.red = false;
             this.split = false;
         });
+        // * when the shutter button is pressed we take the photo
         camButton.addEventListener("click", ()=>this.takePhoto());
+        // * getVideo pulls the video stream from the computers camera
         this.getVideo();
+        // * when video is available we paint the frames to the canvas
         this.video.addEventListener("canplay", () => {
             this.paintToCanvas();
         });
 
     }
-
+    /**
+     * * getVideo
+     * 
+     * * In this fucntion we gather video but not audio
+     * * The video becomes a stream which we play
+     * * this.video represents the video tag in the html
+     */
     getVideo() {
         navigator.mediaDevices.getUserMedia({
                 video: true,
@@ -64,6 +74,13 @@ class PhotoBooth{
                 console.error("Egad!  You don't want video!", error);
             })
     }
+    /**
+     * * paintToCanvas
+     * @returns an interval that writes image data to the canvas every 16milliseconds
+     * * takes the dimensions of the video feed and adjusts the canvas size
+     * * returns an interval that updates the canvas data with video and filter info
+     * * then writes that data to the canvas
+     */
     paintToCanvas() {
         const width = this.video.videoWidth;
         const height = this.video.videoHeight;
@@ -91,6 +108,13 @@ class PhotoBooth{
         }, 16)
     }
     
+    /**
+     * redEffect
+     * @param {*} pixels - the feed of image data from the camera
+     * @returns an array of image data
+     * *takes the red pixel data and adds 200
+     * *reduced the green by 50 and halves the blue values
+     */
     redEffect(pixels) {
         for (let i = 0; i < pixels.data.length; i += 4) {
             pixels.data[i + 0] = pixels.data[i + 0] + 200; // RED
@@ -100,6 +124,13 @@ class PhotoBooth{
         return pixels;
     }
     
+    /**
+     * rgbSplit
+     * @param {*} pixels - an array of video feed data
+     * @returns - an array of modified pixel data
+     * * This funtion changes the relative position of where the pixel colours appear
+     * * The effect is a splitting of the colour channels
+     */
     rgbSplit(pixels) {
         for (let i = 0; i < pixels.data.length; i += 4) {
             pixels.data[i + 0] = pixels.data[i + 100]; // RED
@@ -109,6 +140,19 @@ class PhotoBooth{
         return pixels;
     }
     
+    /**
+     * greenScreenEffect
+     * @param {*} pixels - an array of video feed data
+     * @returns - an array of video data modified by the function
+     * 
+     * * This function works with the onscreen sliders, which have a min and a max
+     * * In each set of 4 values, we check to see if the value of red, green, and blue
+     * * fall between the min and max of the sliders for that colour.
+     * 
+     * * If they fall between the min and max values, the colour value is reset to 0 for alpha
+     * * Alpha is the fourth value of each set of 4 taken in.  If it is set to 0, the pixel is 
+     * * transparent
+     */
     greenScreenEffect(pixels) {
         const levels = {};
     
@@ -136,6 +180,12 @@ class PhotoBooth{
         return pixels;
     }
     
+    /**
+     * * takePhoto
+     * 
+     * * This function takes the data from the canvas and turns it into a jpg
+     * * the jpg data is stored as the src for the image tag that is written to the screen
+     */
     takePhoto() {
         this.snap.currentTime = 0;
         this.snap.play();
